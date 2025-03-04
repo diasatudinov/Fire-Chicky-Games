@@ -10,22 +10,9 @@
 		2B07EFD72D773207005743FB /* Fire Chicky Games.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Fire Chicky Games.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		2B07EFE92D77322C005743FB /* Exceptions for "Fire Chicky Games" folder in "Fire Chicky Games" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				"Fire-Chicky-Games-Info.plist",
-			);
-			target = 2B07EFD62D773207005743FB /* Fire Chicky Games */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		2B07EFD92D773207005743FB /* Fire Chicky Games */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				2B07EFE92D77322C005743FB /* Exceptions for "Fire Chicky Games" folder in "Fire Chicky Games" target */,
-			);
 			path = "Fire Chicky Games";
 			sourceTree = "<group>";
 		};
