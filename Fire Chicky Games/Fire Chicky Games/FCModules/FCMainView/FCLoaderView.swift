@@ -1,13 +1,6 @@
-//
-//  LoaderView.swift
-//  Fire Chicky Games
-//
-//  Created by Dias Atudinov on 04.03.2025.
-//
-
 import SwiftUI
 
-struct LoaderView: View {
+struct FCLoaderView: View {
     @State private var progress: Double = 0.0
     @State private var timer: Timer?
     
@@ -83,5 +76,5 @@ struct LoaderView: View {
 
 
 #Preview {
-    LoaderView()
+    FCLoaderView()
 }
