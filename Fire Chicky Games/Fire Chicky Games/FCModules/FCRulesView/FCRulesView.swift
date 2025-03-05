@@ -26,6 +26,7 @@ struct FCRulesView: View {
                             .resizable()
                             .scaledToFit()
                             .frame(height: 50)
+                            .offset(x: 10, y: 20)
                     }
                     
                     Spacer()
