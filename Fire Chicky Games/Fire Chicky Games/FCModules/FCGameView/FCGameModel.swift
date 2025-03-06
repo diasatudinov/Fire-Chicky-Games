@@ -29,7 +29,7 @@ class GameModel: ObservableObject {
     // Состояния игры
     @Published var gameOver: Bool = false
     @Published var gameWon: Bool = false
-
+    
     init(level: Level) {
         self.level = level
         self.rows = level.rows
@@ -64,7 +64,9 @@ class GameModel: ObservableObject {
         recalcAdjacentCounts()
         gameOver = false
         gameWon = false
-        lives = 3
+        if lives < 1 {
+            lives = 3
+        }
     }
     
     // Пересчёт для каждой клетки количества огней вокруг
