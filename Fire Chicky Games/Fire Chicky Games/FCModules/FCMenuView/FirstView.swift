@@ -1,3 +1,11 @@
+//
+//  FirstView.swift
+//  Fire Chicky Games
+//
+//  Created by Dias Atudinov on 06.03.2025.
+//
+
+
 import SwiftUI
 
 struct FirstView: View {
@@ -15,12 +23,12 @@ struct FirstView: View {
             } else {
                 VStack {
                     if isLoading {
-                        LoadingView()
+                        FCLoaderView()
                             .onAppear {
                                 startTimer()
                             }
                     } else {
-                        MainView()
+                        FCMainView()
                             .onAppear {
                                 AppDelegate.orientationLock = .landscape
                                 setOrientation(.landscapeRight)

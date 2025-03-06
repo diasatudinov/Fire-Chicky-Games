@@ -10,52 +10,15 @@ import SwiftUI
 struct FCMainView: View {
     @State private var showGames = false
     @State private var showInfo = false
+    @State private var showShop = false
     @State private var showSettings = false
     
-//    @StateObject var settingsVM = SettingsViewModel()
+    @StateObject var settingsVM = FCSettingsViewModel()
     
     var body: some View {
         GeometryReader { geometry in
             VStack(spacing: 0) {
-                Spacer()
                 
-                if geometry.size.width < geometry.size.height {
-                    // Вертикальная ориентация
-                    ZStack {
-                            VStack {
-                                Spacer()
-                                
-                                Image(.logoFC)
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(height: 100)
-                                
-                                VStack(spacing: 15) {
-                                    
-                                    Button {
-                                        showGames = true
-                                    } label: {
-//                                        TextBg(text: "Games", textSize: 24)
-                                    }
-                                    
-                                    Button {
-                                        showInfo = true
-                                    } label: {
-//                                        TextBg(text: "Info", textSize: 24)
-                                    }
-                                    
-                                    Button {
-                                        showSettings = true
-                                    } label: {
-//                                        TextBg(text: "Settings", textSize: 24)
-                                    }
-                                    
-                                    
-                                }
-                            
-                        }
-                    }.ignoresSafeArea(edges: .bottom)
-                } else {
                     ZStack {
                         VStack(spacing: 0) {
                             
@@ -68,11 +31,11 @@ struct FCMainView: View {
                                     Image(.scoreBgFC)
                                         .resizable()
                                         .scaledToFit()
-                                    Text("xxxx")
-                                        .font(.system(size: 20, weight: .bold))
+                                    Text("0000")
+                                        .font(.system(size: 18, weight: .bold))
                                         .foregroundStyle(.white)
                                         .textCase(.uppercase)
-                                }.frame(height: 30)
+                                }.frame(height: 35)
                             }
                             Spacer()
                             ZStack {
@@ -125,9 +88,10 @@ struct FCMainView: View {
                                         .frame(height: 50)
                                     
                                     Text("15")
-                                        .font(.system(size: 20, weight: .bold))
+                                        .font(.system(size: 20, weight: .black))
                                         .foregroundStyle(.white)
                                         .textCase(.uppercase)
+                                        .offset(x: 7)
                                 }
                                 
                                 Spacer()
@@ -145,7 +109,7 @@ struct FCMainView: View {
                             HStack {
                                 
                                 Button {
-                                    showInfo = true
+                                    showShop = true
                                 } label: {
                                     Image(.shopIconFC)
                                         .resizable()
@@ -156,7 +120,7 @@ struct FCMainView: View {
                                 Spacer()
                                 
                                 Button {
-                                    showSettings = true
+                                    showInfo = true
                                 } label: {
                                     Image(.rulesIconFC)
                                         .resizable()
@@ -170,8 +134,8 @@ struct FCMainView: View {
                             
                         
                     }
-                }
-            }
+                
+            }.padding()
             .background(
                 Image(.bgFC)
                     .resizable()
@@ -193,14 +157,15 @@ struct FCMainView: View {
 //                }
 //            }
             .fullScreenCover(isPresented: $showGames) {
-//                GamesView(settingsVM: settingsVM)
+                FCTrapSweeperGameView()
             }
             .fullScreenCover(isPresented: $showInfo) {
-//                InfoView()
+                FCRulesView()
             }
             
             .fullScreenCover(isPresented: $showSettings) {
-//                SettingsView(settings: settingsVM)
+                FCSettingsView(settings: settingsVM)
+                
             }
             
         }
