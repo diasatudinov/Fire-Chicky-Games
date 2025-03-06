@@ -29,6 +29,11 @@ struct GameView: View {
                         .frame(height: 60)
                 }
                 Spacer()
+                
+                Text("Level \(game.num)")
+                    .font(.system(size: 30, weight: .medium))
+                    .foregroundStyle(.white)
+                    .textCase(.uppercase)
             }.padding()
             Spacer()
             VStack(spacing: 10) {

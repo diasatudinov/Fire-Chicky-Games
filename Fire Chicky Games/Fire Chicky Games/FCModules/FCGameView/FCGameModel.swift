@@ -13,6 +13,7 @@ import SwiftUI
 class GameModel: ObservableObject {
     // Конфигурация уровня
     let level: Level
+    let num: Int
     let rows: Int
     let columns: Int
     // Максимальное количество флажков равно числу огней в уровне
@@ -32,6 +33,7 @@ class GameModel: ObservableObject {
     
     init(level: Level) {
         self.level = level
+        self.num = level.num
         self.rows = level.rows
         self.columns = level.columns
         self.maxFlags = level.flames.count
