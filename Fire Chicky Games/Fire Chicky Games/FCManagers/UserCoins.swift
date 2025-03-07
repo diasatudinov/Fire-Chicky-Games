@@ -1,20 +1,40 @@
+//
+//  UserCoins.swift
+//  Fire Chicky Games
+//
+//  Created by Dias Atudinov on 07.03.2025.
+//
+
+
 import SwiftUI
 
-class UserCoins: ObservableObject {
-    static let shared = UserCoins()
+class FCUserCoins: ObservableObject {
+    static let shared = FCUserCoins()
     
-    @AppStorage("coins") var storedCoins: Int = 100
-    @Published var coins: Int = 100
+    @AppStorage("coins") var storedCoins: Int = 15
+    @Published var coins: Int = 15
     
-    @AppStorage("experience") var storedXP: Int = 0
-    @Published var xp: Int = 0
+    @AppStorage("score") var storedScore: Int = 0
+    @Published var score: Int = 0
     
-    @AppStorage("level") var storedLevel: Int = 1
-    @Published var level: Int = 1
+    @AppStorage("maxScore") var storedMaxScore: Int = 0
+    @Published var maxScore: Int = 0
+    
     init() {
         coins = storedCoins
-        xp = storedXP
-        level = storedLevel
+        score = storedScore
+        maxScore = storedMaxScore
+    }
+    
+    func updateMaxScore(for score: Int) {
+        self.maxScore = 0
+        self.maxScore += score
+        storedMaxScore = self.maxScore
+    }
+    
+    func updateScore(for score: Int) {
+        self.score += score
+        storedScore = self.score
     }
     
     func updateUserCoins(for coins: Int) {
@@ -29,17 +49,6 @@ class UserCoins: ObservableObject {
         }
         storedCoins = self.coins
         
-    }
-    
-    func updateUserXP() {
-        self.xp += 66
-        
-        if self.xp > 99 {
-            level += 1
-            storedLevel = level
-            self.xp = 0
-        }
-        storedXP = self.xp
     }
     
 }

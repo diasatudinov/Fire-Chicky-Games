@@ -12,7 +12,7 @@ struct FCTrapSweeperGameView: View {
     @State var openLevel = false
     @State var currentLevel: Level?
     @ObservedObject var viewModel = FCTrapSweeperGameViewModel()
-    
+    @ObservedObject var shopVM: FCShopViewModel
     @State private var currentPage: Int = 0
     let levelsPerPage = 10
     
@@ -136,8 +136,8 @@ struct FCTrapSweeperGameView: View {
         )
         .fullScreenCover(isPresented: $openLevel) {
             if let level = currentLevel {
-                GameView(game: GameModel(level: level), backBtnHandle: {
-                        currentLevel = nil
+                GameView(game: GameModel(level: level), shopVM: shopVM, backBtnHandle: {
+                    currentLevel = nil
                 }, gameWonHandle: {
                     viewModel.levelUp(index: level.num)
                 })
@@ -161,6 +161,6 @@ struct FCTrapSweeperGameView: View {
 }
 
 #Preview {
-    FCTrapSweeperGameView()
+    FCTrapSweeperGameView(shopVM: FCShopViewModel())
 }
 

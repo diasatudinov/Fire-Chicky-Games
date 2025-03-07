@@ -8,13 +8,14 @@
 import SwiftUI
 
 struct FCMainView: View {
+    @StateObject var user = FCUserCoins.shared
     @State private var showGames = false
     @State private var showInfo = false
     @State private var showShop = false
     @State private var showSettings = false
     
     @StateObject var settingsVM = FCSettingsViewModel()
-    
+    @StateObject var shopVM = FCShopViewModel()
     var body: some View {
         GeometryReader { geometry in
             VStack(spacing: 0) {
@@ -31,7 +32,7 @@ struct FCMainView: View {
                                     Image(.scoreBgFC)
                                         .resizable()
                                         .scaledToFit()
-                                    Text("0000")
+                                    Text(user.score == 0 ? "0000" : "\(user.score)")
                                         .font(.system(size: 18, weight: .bold))
                                         .foregroundStyle(.white)
                                         .textCase(.uppercase)
@@ -69,7 +70,7 @@ struct FCMainView: View {
                                     .foregroundStyle(.white)
                                     .textCase(.uppercase)
                                 
-                                Text("xxxx")
+                                Text(user.maxScore == 0 ? "xxxx":"\(user.maxScore)")
                                     .font(.system(size: 20, weight: .bold))
                                     .foregroundStyle(.white)
                                     .textCase(.uppercase)
@@ -81,18 +82,7 @@ struct FCMainView: View {
                         
                         VStack {
                             HStack {
-                                ZStack {
-                                    Image(.eggsBgFC)
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(height: 50)
-                                    
-                                    Text("15")
-                                        .font(.system(size: 20, weight: .black))
-                                        .foregroundStyle(.white)
-                                        .textCase(.uppercase)
-                                        .offset(x: 7)
-                                }
+                                FCCoinsView()
                                 
                                 Spacer()
                                 Button {
@@ -144,25 +134,27 @@ struct FCMainView: View {
                     .blur(radius: 4)
                 
             )
-//            .onAppear {
-//                if settingsVM.musicEnabled {
-//                    SongsManager.shared.playBackgroundMusic()
-//                }
-//            }
-//            .onChange(of: settingsVM.musicEnabled) { enabled in
-//                if enabled {
-//                    SongsManager.shared.playBackgroundMusic()
-//                } else {
-//                    SongsManager.shared.stopBackgroundMusic()
-//                }
-//            }
+            .onAppear {
+                if settingsVM.musicEnabled {
+                    FCSongsManager.shared.playBackgroundMusic()
+                }
+            }
+            .onChange(of: settingsVM.musicEnabled) { enabled in
+                if enabled {
+                    FCSongsManager.shared.playBackgroundMusic()
+                } else {
+                    FCSongsManager.shared.stopBackgroundMusic()
+                }
+            }
             .fullScreenCover(isPresented: $showGames) {
-                FCTrapSweeperGameView()
+                FCTrapSweeperGameView(shopVM: shopVM)
             }
             .fullScreenCover(isPresented: $showInfo) {
                 FCRulesView()
             }
-            
+            .fullScreenCover(isPresented: $showShop) {
+                FCShopView(shopVM: shopVM)
+            }
             .fullScreenCover(isPresented: $showSettings) {
                 FCSettingsView(settings: settingsVM)
                 

@@ -1,12 +1,18 @@
 import SwiftUI
+import AVFoundation
 
 // MARK: - Игровой экран
 struct GameView: View {
     @Environment(\.presentationMode) var presentationMode
+    @StateObject var settingsVM = FCSettingsViewModel()
     @StateObject var game: GameModel
+    @ObservedObject var shopVM: FCShopViewModel
     @State var backBtnHandle: () -> ()
     @State var gameWonHandle: () -> ()
     let cellSize: CGFloat = 35
+   
+    @State private var audioPlayer: AVAudioPlayer?
+    
     var body: some View {
         VStack(spacing: 0) {
             HStack {
@@ -93,11 +99,13 @@ struct GameView: View {
                                         }
                                         // Курочка
                                         if (r, c) == game.chickenPosition {
-                                            Image(.gameChichenFC)
-                                                .resizable()
-                                                .scaledToFit()
-                                                .frame(width: cellSize, height: cellSize)
-                                                .offset(y: -5)
+                                            if let item = shopVM.currentChicken {
+                                                Image("\(item.design)_gameChichenFC")
+                                                    .resizable()
+                                                    .scaledToFit()
+                                                    .frame(width: cellSize, height: cellSize)
+                                                    .offset(y: -5)
+                                            }
                                         }
                                         
                                         // Если клетка открыта и содержит огонь
@@ -119,11 +127,13 @@ struct GameView: View {
                                         
                                         // Флажок
                                         if tile.isFlagged {
-                                            Image("type1_flagFC")
-                                                .resizable()
-                                                .scaledToFit()
-                                                .frame(width: cellSize, height: cellSize)
-                                                .offset(x: 5, y: -5)
+                                            if let item = shopVM.currentFlag {
+                                                Image("\(item.design)_flagFC")
+                                                    .resizable()
+                                                    .scaledToFit()
+                                                    .frame(width: cellSize, height: cellSize)
+                                                    .offset(x: 5, y: -5)
+                                            }
                                         }
                                         // Стрелка – всегда видна и расположена в центре клетки
                                         if let arrow = tile.arrow {
@@ -183,7 +193,7 @@ struct GameView: View {
                     .cornerRadius(10)
                     HStack(spacing: 5) {
                         Text("\(game.lives)")
-                        Image(.gameChichenFC)
+                        Image("type1_gameChichenFC")
                             .resizable()
                             .scaledToFit()
                     }
@@ -227,10 +237,32 @@ struct GameView: View {
             }
         }
         
+        .onChange(of: game.gameWon) { newValue in
+            playSound(named: "gameWonFC")
+        }
+        .onChange(of: game.lives) { newValue in
+            if newValue < 3 {
+                playSound(named: "gameLoseFC")
+            }
+        }
+        
         
     }
+    
+    private func playSound(named soundName: String) {
+         if settingsVM.soundEnabled {
+             if let url = Bundle.main.url(forResource: soundName, withExtension: "mp3") {
+                 do {
+                     audioPlayer = try AVAudioPlayer(contentsOf: url)
+                     audioPlayer?.play()
+                 } catch {
+                     print("Error playing sound: \(error.localizedDescription)")
+                 }
+             }
+         }
+     }
 }
 
 #Preview {
-    FCTrapSweeperGameView()
+    FCTrapSweeperGameView(shopVM: FCShopViewModel())
 }

@@ -8,8 +8,20 @@
 import SwiftUI
 
 struct FCCoinsView: View {
+    @StateObject var user = FCUserCoins.shared
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack {
+            Image(.eggsBgFC)
+                .resizable()
+                .scaledToFit()
+                .frame(height: 50)
+            
+            Text("\(user.coins)")
+                .font(.system(size: 20, weight: .black))
+                .foregroundStyle(.white)
+                .textCase(.uppercase)
+                .offset(x: 7)
+        }
     }
 }
 

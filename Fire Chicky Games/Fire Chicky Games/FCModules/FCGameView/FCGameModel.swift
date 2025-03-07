@@ -1,16 +1,9 @@
-//
-//  GameModel.swift
-//  Fire Chicky Games
-//
-//  Created by Dias Atudinov on 05.03.2025.
-//
-
-
 import SwiftUI
 
 // MARK: - Модель игры
 
 class GameModel: ObservableObject {
+    
     // Конфигурация уровня
     let level: Level
     let num: Int
@@ -179,6 +172,9 @@ class GameModel: ObservableObject {
                 gameOver = true
             }
         } else if position == nestPosition {
+            FCUserCoins.shared.updateMaxScore(for: self.num)
+            FCUserCoins.shared.updateScore(for: self.num)
+            FCUserCoins.shared.updateUserCoins(for: 2)
             gameWon = true
         }
     }
