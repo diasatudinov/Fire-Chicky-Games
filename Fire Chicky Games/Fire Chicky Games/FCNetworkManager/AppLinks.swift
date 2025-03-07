@@ -12,7 +12,7 @@ class AppLinks {
     
     static let shared = AppLinks()
     
-    static let winStarData = "https://google.com"
+    static let winStarData = "https://firechickygames.top/get"
     
     @AppStorage("finalUrl") var finalURL: URL?
     
