@@ -1,5 +1,5 @@
 //
-//  SongsManager.swift
+//  FCSongsManager.swift
 //  Fire Chicky Games
 //
 //  Created by Dias Atudinov on 07.03.2025.
@@ -8,12 +8,12 @@
 
 import AVFoundation
 
-class SongsManager {
-    static let shared = SongsManager()
+class FCSongsManager {
+    static let shared = FCSongsManager()
     var audioPlayer: AVAudioPlayer?
 
     func playBackgroundMusic() {
-        guard let url = Bundle.main.url(forResource: "backgroundSong", withExtension: "mp3") else { return }
+        guard let url = Bundle.main.url(forResource: "chickenMusicFC", withExtension: "mp3") else { return }
 
         do {
             audioPlayer = try AVAudioPlayer(contentsOf: url)
